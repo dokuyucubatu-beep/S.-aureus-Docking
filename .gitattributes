@@ -9,3 +9,8 @@
 # Preserve all evidence bytes, including JSON manifests and logs written on Windows.
 data/** -text
 experiments/** -text
+qsar/data/** -text
+qsar/results/** -text
+*.joblib binary
+*.npz binary
+*.gz binary
