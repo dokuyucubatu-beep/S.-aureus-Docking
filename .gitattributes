@@ -6,3 +6,6 @@
 *.py text eol=lf
 *.md text eol=lf
 *.json text eol=lf
+# Preserve all evidence bytes, including JSON manifests and logs written on Windows.
+data/** -text
+experiments/** -text

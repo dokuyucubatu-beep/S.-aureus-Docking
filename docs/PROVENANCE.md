@@ -9,7 +9,8 @@ Downloaded on 2026-11-11:
 
 The preparation audit records raw structure and protocol hashes. The run manifest
 records prepared inputs, protocol, source scripts, executable, logs and pose hashes.
-Original bytes are retained; structure files are exempt from Git newline conversion.
+Original bytes are retained; every file under `data/` and `experiments/` is
+exempt from Git newline conversion, including JSON and logs.
 
 The project was created from the user's example description, not copied from
 an existing AChE implementation. No AChE outputs or numerical results were reused.
