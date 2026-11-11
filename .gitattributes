@@ -1,0 +1,8 @@
+*.pdb -text
+*.pdbqt -text
+*.sdf -text
+*.cif -text
+*.png binary
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf

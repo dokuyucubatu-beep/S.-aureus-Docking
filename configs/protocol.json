@@ -1,0 +1,22 @@
+{
+  "pdb_id": "2W9H",
+  "chain": "A",
+  "ligand_resname": "TOP",
+  "ligand_resid": "1160",
+  "altloc": "A",
+  "smiles": "COc1cc(Cc2cnc(N)nc2N)cc(OC)c1OC",
+  "formal_charge": 0,
+  "embedding_seed": 2026,
+  "repair_seed": 2026,
+  "seeds": [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035],
+  "cpu": 2,
+  "exhaustiveness": 16,
+  "num_modes": 20,
+  "energy_range": 5,
+  "box_size": [22, 22, 22],
+  "rmsd_cutoff_angstrom": 2.0,
+  "contact_cutoff_angstrom": 4.0,
+  "vina_version": "1.2.7",
+  "reference_policy": "TOP A1160 altloc A plus shared atoms; box at heavy-atom centroid",
+  "receptor_policy": "Chain A, altloc A; PDBFixer completes Lys158 and terminal OXT; missing Met0 not built; waters and EDO removed; Meeko default residue templates"
+}
