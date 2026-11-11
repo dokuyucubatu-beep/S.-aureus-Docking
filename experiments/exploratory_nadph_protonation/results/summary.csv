@@ -1,0 +1,5 @@
+variant,seeds,top1_below_2A,top1_rmsd_mean,top1_rmsd_sd,best_below_2A,best_rank_median
+neutral,1,0,3.609,,1,14.0
+protonated,10,0,3.558,0.03,10,5.0
+neutral_NADPH,10,0,6.62,0.881,10,5.0
+protonated_NADPH,10,10,1.192,0.146,10,2.0

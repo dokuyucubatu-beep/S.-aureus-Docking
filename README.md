@@ -128,6 +128,7 @@ needed to analyze archived docking results. No executable is bundled.
 | `data/raw/` | Unmodified PDB 2W9H and TOP chemical component dictionary |
 | `data/prepared/` | Observed/repaired/prepared receptor, reference and independent ligand, audit |
 | `experiments/independent/` | Fixed inputs, ten raw outputs/logs, hashes and analysis |
+| `experiments/exploratory_nadph_protonation/` | Post hoc add-on: grafted NADPH and N1-protonated ligand (see [docs](docs/EXPLORATORY_NADPH_PROTONATION.md)); does not replace the primary result |
 | `scripts/` | Preparation, orchestration and analysis |
 | `tests/` | Chemistry, reference-frame, repair and parser checks |
 | `notebooks/` | Guided saved-evidence validation (requires Jupyter separately) |
