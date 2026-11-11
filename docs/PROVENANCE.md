@@ -23,6 +23,13 @@ docking was stopped and excluded on that geometry criterion before evaluating it
 pose metrics. The final input uses fixed-observed-atom Amber14 refinement. No pilot
 results are represented as final evidence, and no historical baseline is claimed.
 
+The user subsequently requested exhaustiveness 32. The run started at 16 was
+stopped, and the final ten-seed experiment restarted at 32 with unchanged repaired
+receptor, independent ligand, box and seeds. The preparation-time protocol is
+archived separately in `data/prepared/preparation_protocol.json`; its docking
+exhaustiveness field is historical and does not control the final experiment.
+The active and run-local `protocol.json` files control docking.
+
 The local Git environment had no author identity configured. Commits created by
 the assistant use `Codex <codex@localhost>` without changing global Git identity.
 

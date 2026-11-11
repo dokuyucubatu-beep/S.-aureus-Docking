@@ -28,7 +28,7 @@ are fixed modeling assumptions, not a pKa or protonation-ensemble calculation.
 
 [Protocol](configs/protocol.json): one ETKDGv3/MMFF94s conformer generated only
 from SMILES, then seeds 2026–2035; Vina 1.2.7, CPU 2 per run,
-exhaustiveness 16, up to 20 modes, energy range 5 kcal/mol. The 22 A cube is
+exhaustiveness 32, up to 20 modes, energy range 5 kcal/mol. The 22 A cube is
 centered on the reference heavy-atom centroid. Crystal coordinates define the
 known site and validation reference, not the starting ligand conformation.
 Trimethoprim is modeled in the neutral CCD state (formal charge 0); alternative
