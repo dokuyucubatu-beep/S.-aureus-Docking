@@ -86,6 +86,6 @@
   "sha256": {
     "data\\raw\\2W9H.pdb": "5773f48262c9cf94c2f6e670825caa935ab23767f4359b3c747da892b940ea37",
     "data\\raw\\TOP.cif": "553d8b66caffbe3ccd4b2f3c0f5480918ed110322c82a53f7b33b08553209ee7",
-    "configs\\protocol.json": "fb4bf386098189df75c0f320361a28ef59f55966c49fa6a72bd3413a1bab7b08"
+    "data/prepared/preparation_protocol.json": "fb4bf386098189df75c0f320361a28ef59f55966c49fa6a72bd3413a1bab7b08"
   }
 }
