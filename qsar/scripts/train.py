@@ -124,12 +124,34 @@ def run(output):
     joblib.dump({'pipeline':core,'descriptor_names':names,'protocol':cfg,'training_scaled':Ztr,
                  'training_smiles':data.iloc[train].smiles.tolist(),'similarity_threshold':sim_limit},output/'model.joblib',compress=3)
 
+    finalize(output)
+
+def finalize(output):
+    """Generate verified explanations/reports from a frozen model without refitting."""
+    output=Path(output)
+    cfg=json.loads((output/'protocol.json').read_text())
+    report=json.loads((output/'metrics.json').read_text())
+    data=pd.read_csv(ROOT/'data/curated/compounds.csv')
+    train=np.flatnonzero(data.split.values=='train'); test=np.flatnonzero(data.split.values=='test')
+    y=data.pMIC.to_numpy(); ytr=y[train]
+    bundle=joblib.load(output/'model.joblib'); core=bundle['pipeline']
+    X=np.load(output/'descriptor_matrix.npz')['X']
+    select=core.named_steps['select']; chosen=[bundle['descriptor_names'][i] for i in select.selected_indices_]
+    Ztr=bundle['training_scaled']; Ztest=core[:-1].transform(X[test])
+    pred=pd.read_csv(output/'test_predictions.csv'); ptest=pred.predicted_pMIC.to_numpy()
+    assert list(pred.compound_id)==data.iloc[test].compound_id.tolist()
+    np.testing.assert_allclose(core.predict(X[test]),ptest,atol=1e-12)
+    in_ad=pred.in_AD.to_numpy(); h=pred.leverage.to_numpy(); limit=report['AD']['leverage_threshold']
+    htrain,_=leverage(Ztr,Ztr)
+    cv5=pd.read_csv(output/'cv_predictions.csv').cv5_pred.to_numpy()
+    nullq=pd.read_csv(output/'y_scrambling.csv').q2.to_numpy(); q2=report['five_fold_cv_Q2']
     # Explain fixed held-out predictions. Background comes solely from training rows.
     import shap
     rng=np.random.default_rng(cfg['seed'])
     bg_idx=np.sort(rng.choice(len(train),min(cfg['shap_background_size'],len(train)),replace=False))
-    explainer=shap.TreeExplainer(core.named_steps['model'],data=Ztr[bg_idx],feature_perturbation='interventional',model_output='raw')
-    explanation=explainer(Ztest,check_additivity=True)
+    masker=shap.maskers.Independent(Ztr[bg_idx],max_samples=len(bg_idx))
+    explainer=shap.Explainer(core.named_steps['model'].predict,masker,algorithm='permutation',seed=cfg['seed'])
+    explanation=explainer(Ztest,max_evals=10*(2*Ztest.shape[1]+1))
     reconstructed=explanation.base_values+explanation.values.sum(axis=1)
     error=float(np.max(np.abs(reconstructed-ptest)))
     np.testing.assert_allclose(reconstructed,ptest,atol=1e-5,rtol=1e-5)
@@ -138,7 +160,7 @@ def run(output):
     np.savez_compressed(output/'shap_values.npz',values=explanation.values,base_values=explanation.base_values,
                         raw_descriptors=raw_test,background_scaled=Ztr[bg_idx])
     pd.DataFrame({'descriptor':chosen,'mean_abs_SHAP':np.mean(np.abs(explanation.values),axis=0)}).sort_values('mean_abs_SHAP',ascending=False).to_csv(output/'shap_importance.csv',index=False)
-    save_json(output/'shap_audit.json',{'output':'predicted pMIC, log10 molar units','background_train_compound_ids':data.iloc[train[bg_idx]].compound_id.tolist(),
+    save_json(output/'shap_audit.json',{'algorithm':'PermutationExplainer over exact RF predict callable; 10 forward/reverse permutation cycles per row','output':'predicted pMIC, log10 molar units','background_train_compound_ids':data.iloc[train[bg_idx]].compound_id.tolist(),
               'explained_test_compound_ids':data.iloc[test].compound_id.tolist(),'max_additivity_error':error,
               'interpretation':'Model attribution, not causal mechanism; correlated-feature masking assumptions apply'})
     shap.plots.beeswarm(display,max_display=15,show=False)
@@ -164,10 +186,12 @@ def run(output):
     provenance={'python':platform.python_version(),'versions':{x:importlib.metadata.version(x) for x in ['deepchem','rdkit','numpy','pandas','scikit-learn','shap','scipy','matplotlib','joblib']},
                 'input_sha256':{str(p.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(p.read_bytes()).hexdigest() for p in [ROOT/'config.json',ROOT/'data/curated/compounds.csv']},
                 'source_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'scripts').glob('*.py')},
-                'output_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in output.iterdir() if p.is_file()}}
+                'output_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in output.iterdir() if p.is_file() and p.name!='manifest.json'}}
     save_json(output/'manifest.json',provenance)
     print(json.dumps(report,indent=2),flush=True)
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__); p.add_argument('--output',type=Path,default=ROOT/'results/reference')
-    run(p.parse_args().output)
+    p.add_argument('--finalize-only',action='store_true')
+    a=p.parse_args()
+    finalize(a.output) if a.finalize_only else run(a.output)
