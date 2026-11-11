@@ -3,6 +3,8 @@
 Independent SMILES ligand preparation, ten-seed AutoDock Vina docking,
 crystal-reference RMSD and residue contacts for **Staphylococcus aureus DHFR–trimethoprim (2W9H)**.
 
+[Türkçe özet](docs/README_TR.md)
+
 The receptor is chain A of the 1.48 A structure [2W9H](https://www.rcsb.org/structure/2W9H).
 Trimethoprim (CCD TOP, A1160) is the crystallographic reference. This is a
 single-system pose-recovery experiment, not evidence of antibacterial efficacy,
@@ -42,6 +44,46 @@ alignment**. Chemical identity and charge must match. Vina's relative RMSD
 columns are not crystal-reference RMSDs. Contacts use minimum heavy-atom
 distance <=4 A and do not assign hydrogen bonds or other interaction types.
 
+## Saved results (exhaustiveness 32)
+
+| Endpoint | Result |
+|---|---:|
+| Top-ranked pose RMSD <2 A | 0/10 runs |
+| At least one sampled pose RMSD <2 A | 10/10 runs |
+| Top-ranked RMSD, mean ± sample SD | 3.599 ± 0.023 A |
+| Top-ranked RMSD, median | 3.598 A |
+| Top-ranked RMSD range | 3.569–3.647 A |
+| Returned poses | 200 |
+| Mean native-contact recall, top-ranked | 72.7% |
+
+Vina samples near-native poses in every run but does not rank them first in
+this fixed neutral-ligand model. Lower-ranked successes do not count as
+top-rank successes. The best-sampled ranks range from 7 to 14.
+
+![Top-ranked versus best-sampled RMSD](experiments/independent/analysis/rmsd_by_seed.png)
+
+| Seed | Top-ranked RMSD (A) | Best-sampled RMSD (A) | Best-sampled rank |
+|---|---:|---:|---:|
+| 2026 | 3.609 | 1.715 | 14 |
+| 2027 | 3.569 | 1.373 | 7 |
+| 2028 | 3.599 | 1.308 | 8 |
+| 2029 | 3.617 | 1.181 | 9 |
+| 2030 | 3.597 | 1.209 | 14 |
+| 2031 | 3.605 | 1.531 | 13 |
+| 2032 | 3.647 | 1.169 | 10 |
+| 2033 | 3.573 | 1.288 | 13 |
+| 2034 | 3.581 | 1.272 | 13 |
+| 2035 | 3.591 | 1.405 | 7 |
+
+[All poses](experiments/independent/analysis/all_poses.csv),
+[per-run metrics](experiments/independent/analysis/per_run.csv),
+[summary](experiments/independent/analysis/summary.json),
+[integrity manifest](experiments/independent/manifest.json).
+
+![Native and predicted contacts](experiments/independent/analysis/contacts.png)
+
+![Prespecified seed 2026 overlay](experiments/independent/analysis/overlay_seed2026.png)
+
 ## Run
 
 For analysis of saved evidence (Python 3.13):
@@ -50,6 +92,7 @@ For analysis of saved evidence (Python 3.13):
 python -m pip install -r requirements.txt
 python -m unittest discover -s tests -v
 python scripts/analyze.py
+python scripts/plot_results.py
 ```
 
 Install the [official AutoDock Vina 1.2.7 executable](https://github.com/forlilab/AutoDock-Vina/releases/tag/v1.2.7) separately, then:
@@ -87,6 +130,7 @@ needed to analyze archived docking results. No executable is bundled.
 | `experiments/independent/` | Fixed inputs, ten raw outputs/logs, hashes and analysis |
 | `scripts/` | Preparation, orchestration and analysis |
 | `tests/` | Chemistry, reference-frame, repair and parser checks |
+| `notebooks/` | Guided saved-evidence validation (requires Jupyter separately) |
 | `docs/` | Methods, provenance and limitations |
 
 GitHub Actions validates saved evidence and uploads regenerated reports; it does

@@ -1,0 +1,23 @@
+# Validation record
+
+Local validation on 2026-11-11, Windows, Python environment versions recorded in
+the preparation and experiment manifests:
+
+- Ten Vina 1.2.7 runs at exhaustiveness 32 completed with exit status zero.
+- 200 poses parsed; molecule identity matched the neutral TOP reference.
+- Archived inputs, protocol, command files, logs and poses passed SHA-256
+  verification during independent analysis regeneration.
+- `python -m unittest discover -s tests -v`: **9 tests passed**.
+- `python scripts/plot_results.py`: regenerated RMSD, residue-contact and
+  seed-2026 overlay figures from saved evidence; figures visually inspected.
+- Notebook JSON and Python cell syntax checked; notebook execution is not claimed.
+
+Tests cover untranslated coordinate-frame RMSD, atom reordering, hydrogen exclusion,
+charge mismatch rejection, crystal-reference integrity, independently embedded
+ligand coordinates, retained/completed Lys158, repaired bond geometry, stereochemical
+handedness, equivalent terminal-oxygen relabeling, contact cutoff and malformed
+pose rejection. The terminal O/OXT names are exchanged by Meeko; coordinates
+are unchanged as a set. Every other heavy atom retains its named coordinates.
+
+No cross-platform bitwise equivalence, protonation sensitivity, rotamer ensemble,
+biochemical activity or independent target benchmark has been validated.

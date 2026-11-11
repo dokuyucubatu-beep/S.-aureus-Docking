@@ -29,6 +29,7 @@ receptor, independent ligand, box and seeds. The preparation-time protocol is
 archived separately in `data/prepared/preparation_protocol.json`; its docking
 exhaustiveness field is historical and does not control the final experiment.
 The active and run-local `protocol.json` files control docking.
+The final 32-exhaustiveness run started after local commit `31f77d4`.
 
 The local Git environment had no author identity configured. Commits created by
 the assistant use `Codex <codex@localhost>` without changing global Git identity.

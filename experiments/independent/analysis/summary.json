@@ -1,0 +1,14 @@
+{
+  "runs": 10,
+  "total_poses": 200,
+  "top1_below_2A": 0,
+  "any_pose_below_2A": 10,
+  "top1_mean_A": 3.598702213535437,
+  "top1_sample_sd_A": 0.022919158971152816,
+  "top1_median_A": 3.5976635088976376,
+  "top1_range_A": [
+    3.568872602783163,
+    3.646704524959868
+  ],
+  "mean_top1_native_contact_recall": 0.7272727272727273
+}

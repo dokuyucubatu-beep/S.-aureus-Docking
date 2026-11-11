@@ -1,0 +1,5 @@
+
+Files written:
+ C:\Users\Rapidus\Documents\Codex\2026-11-11\bun\outputs\S.-aureus\data\prepared\receptor.json <-- parameterized receptor
+ C:\Users\Rapidus\Documents\Codex\2026-11-11\bun\outputs\S.-aureus\data\prepared\receptorH.pdb <-- processed receptor PDB
+C:\Users\Rapidus\Documents\Codex\2026-11-11\bun\outputs\S.-aureus\data\prepared\receptor.pdbqt <-- static (i.e., rigid) receptor input file
