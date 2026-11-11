@@ -4,5 +4,3 @@ __pycache__/
 experiments/rerun*/
 build/
 *.exe
-qsar/results/rerun*/
-qsar/results/reference/deepchem/

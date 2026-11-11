@@ -1,18 +1,4 @@
-# S. aureus: DHFR Docking and Antibacterial QSAR
-
-Two independent studies:
-
-- **[Antibacterial QSAR](qsar/README.md):** DeepChem descriptor-based pMIC regression
-  for S. aureus ATCC 29213; 542 compounds, 15 selected descriptors, scaffold-held-out
-  validation, 1,000 bootstrap replicates, Y-scrambling, SHAP and an OECD evidence map.
-  See the [full metric table and limitations](qsar/RESULTS.md).
-- **DHFR docking reproducibility:** the ten-seed 2W9H–trimethoprim experiment below.
-
-QSAR uses experimental whole-cell MIC data, not docking scores. Its test R² is
-0.680, but 10-fold scaffold CV R² is 0.278 ± 0.405; transfer across scaffolds is
-uneven. OECD documentation is supplied; regulatory acceptance is not claimed.
-
-## DHFR docking experiment
+# S. aureus DHFR Docking Reproducibility
 
 Independent SMILES ligand preparation, ten-seed AutoDock Vina docking,
 crystal-reference RMSD and residue contacts for **Staphylococcus aureus DHFR–trimethoprim (2W9H)**.
