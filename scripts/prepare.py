@@ -9,8 +9,8 @@ from pathlib import Path
 import gemmi
 import numpy as np
 from meeko import MoleculePreparation, PDBQTWriterLegacy
-from openmm import Platform, unit
-from openmm.app import PDBFile
+from openmm import Platform, unit, VerletIntegrator, Context, LocalEnergyMinimizer
+from openmm.app import PDBFile, Modeller, ForceField, NoCutoff
 from pdbfixer import PDBFixer
 from rdkit import Chem
 from rdkit.Chem import AllChem
@@ -80,6 +80,26 @@ def prepare(out):
     if set(missing) != {"A:158:LYS"}:
         raise ValueError(f"Unexpected missing residues/atoms: {missing}")
     fixer.addMissingAtoms(seed=cfg["repair_seed"])
+    # Relax only added heavy atoms and hydrogens; observed heavy atoms have mass zero.
+    import random
+    random.seed(cfg["repair_seed"])
+    observed = pdb_atoms(source)
+    forcefield = ForceField("amber14-all.xml")
+    modeller = Modeller(fixer.topology, fixer.positions)
+    modeller.addHydrogens(forcefield, pH=7.0, platform=Platform.getPlatformByName("Reference"))
+    system = forcefield.createSystem(modeller.topology, nonbondedMethod=NoCutoff, constraints=None)
+    for atom in modeller.topology.atoms():
+        key = (atom.residue.chain.id, atom.residue.id, atom.residue.name, atom.name)
+        if key in observed:
+            system.setParticleMass(atom.index, 0)
+    integrator = VerletIntegrator(0.001)
+    context = Context(system, integrator, Platform.getPlatformByName("Reference"))
+    context.setPositions(modeller.positions)
+    LocalEnergyMinimizer.minimize(context, tolerance=1.0, maxIterations=5000)
+    modeller.positions = context.getState(getPositions=True).getPositions()
+    del context, integrator
+    modeller.delete([a for a in modeller.topology.atoms() if a.element.symbol == "H"])
+    fixer.topology, fixer.positions = modeller.topology, modeller.positions
     repaired = out / "receptor_repaired.pdb"
     with repaired.open("w") as handle:
         PDBFile.writeFile(fixer.topology, fixer.positions, handle, keepIds=True)
@@ -96,7 +116,7 @@ def prepare(out):
         if a.residue.id == "158" or b.residue.id == "158":
             length = float(np.linalg.norm(np.array(xyz[a.index]) - np.array(xyz[b.index])))
             bond_lengths[f"{a.residue.id}:{a.name}-{b.residue.id}:{b.name}"] = length
-            if not 1.1 < length < 1.8:
+            if not 1.15 < length < 1.65:
                 raise ValueError(f"Implausible repaired bond: {length}")
     cmd = [sys.executable, "-m", "meeko.cli.mk_prepare_receptor", "--read_pdb", str(repaired),
            "-o", str(out / "receptor"), "-p", "-j", "--write_pdb", str(out / "receptorH.pdb")]

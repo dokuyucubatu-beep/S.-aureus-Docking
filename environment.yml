@@ -1,0 +1,10 @@
+name: saureus-dhfr
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - pdbfixer=1.12
+  - openmm=8.6
+  - pip
+  - pip:
+      - -r requirements.txt

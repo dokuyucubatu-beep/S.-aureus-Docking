@@ -13,66 +13,66 @@
   },
   "added_atoms": {
     "A:158:LYS:CA": [
-      5.997,
-      20.261,
-      4.048
+      5.221,
+      20.601,
+      3.878
     ],
     "A:158:LYS:CB": [
-      5.061,
-      21.572,
-      4.168
+      4.264,
+      21.243,
+      4.913
     ],
     "A:158:LYS:CG": [
-      5.053,
-      22.09,
-      2.701
+      4.587,
+      22.662,
+      5.415
     ],
     "A:158:LYS:CD": [
-      4.178,
-      23.334,
-      2.526
+      5.048,
+      22.744,
+      6.887
     ],
     "A:158:LYS:CE": [
-      4.4,
-      24.073,
-      1.203
+      6.508,
+      22.347,
+      7.161
     ],
     "A:158:LYS:NZ": [
-      5.296,
-      25.23,
-      1.398
+      6.686,
+      20.914,
+      7.489
     ],
     "A:158:LYS:C": [
-      6.049,
-      20.655,
-      5.762
+      6.67,
+      20.68,
+      4.354
     ],
     "A:158:LYS:O": [
-      6.231,
-      21.181,
-      6.907
+      7.047,
+      19.755,
+      5.111
     ],
     "A:158:LYS:OXT": [
-      6.657,
-      21.788,
-      6.279
+      7.318,
+      21.717,
+      4.122
     ]
   },
   "max_observed_atom_shift_A": 0.0,
   "repaired_bond_lengths_A": {
     "157:C-158:N": 1.2326029368778912,
-    "158:C-158:CA": 1.7594069207389833,
-    "158:C-158:O": 1.2736362342536915,
-    "158:C-158:OXT": 1.386609398570639,
-    "158:CA-158:CB": 1.6158076726320578,
-    "158:CA-158:N": 1.598393793882238,
-    "158:CB-158:CG": 1.555542189827183,
-    "158:CD-158:CE": 1.5308640775632136,
-    "158:CD-158:CG": 1.5308915326133392,
-    "158:CE-158:NZ": 1.4772779156129838
+    "158:C-158:CA": 1.5275262399541394,
+    "158:C-158:O": 1.2535787665790399,
+    "158:C-158:OXT": 1.2446766410034769,
+    "158:CA-158:CB": 1.5485650366952672,
+    "158:CA-158:N": 1.4707505528805132,
+    "158:CB-158:CG": 1.5398902848330023,
+    "158:CD-158:CE": 1.5380851049335185,
+    "158:CD-158:CG": 1.5449765793353798,
+    "158:CE-158:NZ": 1.4813757937205994
   },
-  "lys158_min_native_ligand_distance_A": 23.41284369742386,
-  "policy": "Chain A, altloc A; PDBFixer completes Lys158 and terminal OXT; missing Met0 not built; waters and EDO removed; Meeko default residue templates",
+  "lys158_min_native_ligand_distance_A": 23.286985399574586,
+  "policy": "Chain A, altloc A; PDBFixer completes Lys158 and terminal OXT; Amber14 minimization of added atoms with observed heavy atoms fixed; missing Met0 not built; waters and EDO removed; Meeko default residue templates",
   "ligand_formal_charge": 0,
   "reference_heavy_atoms": 21,
   "versions": {
@@ -86,6 +86,6 @@
   "sha256": {
     "data\\raw\\2W9H.pdb": "5773f48262c9cf94c2f6e670825caa935ab23767f4359b3c747da892b940ea37",
     "data\\raw\\TOP.cif": "553d8b66caffbe3ccd4b2f3c0f5480918ed110322c82a53f7b33b08553209ee7",
-    "configs\\protocol.json": "d44741f15b0fc525ed64d27b9c7d9941ecb6b5797bbb8bf92fee92f6d59ae535"
+    "configs\\protocol.json": "fb4bf386098189df75c0f320361a28ef59f55966c49fa6a72bd3413a1bab7b08"
   }
 }

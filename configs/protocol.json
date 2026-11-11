@@ -18,5 +18,5 @@
   "contact_cutoff_angstrom": 4.0,
   "vina_version": "1.2.7",
   "reference_policy": "TOP A1160 altloc A plus shared atoms; box at heavy-atom centroid",
-  "receptor_policy": "Chain A, altloc A; PDBFixer completes Lys158 and terminal OXT; missing Met0 not built; waters and EDO removed; Meeko default residue templates"
+  "receptor_policy": "Chain A, altloc A; PDBFixer completes Lys158 and terminal OXT; Amber14 minimization of added atoms with observed heavy atoms fixed; missing Met0 not built; waters and EDO removed; Meeko default residue templates"
 }
